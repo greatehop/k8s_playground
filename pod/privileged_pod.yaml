@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: privileged-pod
+  name: privileged-pod
+spec:
+  hostIPC: true
+  hostNetwork: true
+  hostPID: true
+  containers:
+  - args:
+    - sleep
+    - "9999"
+    image: centos:7
+    name: privileged-pod
+    volumeMounts:
+    - name: host-root-volume
+      mountPath: /host
+      readOnly: true
+  volumes:
+  - name: host-root-volume
+    hostPath:
+      path: /
