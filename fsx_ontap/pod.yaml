@@ -1,0 +1,19 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: fsx-test1
+spec:
+  volumes:
+    - name: fsx-ontap-pv-storage
+      persistentVolumeClaim:
+        claimName: fsx-ontap-claim
+  containers:
+    - name: fsx-test1
+      image: ubuntu
+      command:
+        - "sleep"
+        - "604800"
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - mountPath: "/fsx-shared/"
+          name: fsx-ontap-pv-storage
