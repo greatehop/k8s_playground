@@ -1,0 +1,16 @@
+# AWS service account
+serviceAccount:
+  name: "csi-s3-sa"
+
+# AWS SecretStore
+secret:
+  awsRegion: "us-east-1"
+  name: "prod/csi-s3"
+
+# mount S3 bucket
+s3:
+  enabled: true
+  claimName: "s3-claim"
+  mountPath: "/s3-shared"
+  #namespace: default
+  size: 5Gi
