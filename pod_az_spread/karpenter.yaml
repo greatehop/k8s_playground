@@ -1,0 +1,31 @@
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: provisioner-test-app
+spec:
+  requirements:
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values: ["on-demand"]
+  limits:
+    resources:
+      cpu: 1000
+  providerRef:
+    name: nodetemplate-test-app
+  labels:
+    pool: test-app
+  taints:
+  - key: dedicated
+    value: test-app
+    effect: NoSchedule
+  ttlSecondsAfterEmpty: 120
+---
+apiVersion: karpenter.k8s.aws/v1alpha1
+kind: AWSNodeTemplate
+metadata:
+  name: nodetemplate-test-app
+spec:
+  subnetSelector:
+    karpenter.sh/subnets-discovery: "your-subnets-tag"
+  securityGroupSelector:
+    karpenter.sh/discovery: "your-sg-tag"
