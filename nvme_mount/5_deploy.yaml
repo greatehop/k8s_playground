@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: test-app
+  template:
+    metadata:
+      labels:
+        app: test-app
+    spec:
+      nodeSelector:
+        karpenter.sh: provisioner-nvme
+      tolerations:
+        - key: karpenter.sh/provisioner-nvme
+          operator: "Equal"
+          effect: "NoSchedule"
+      containers:
+      - args:
+        - sleep
+        - "999999"
+        image: centos:7
+        name: centos
+        volumeMounts:
+          - name: local-ssd
+            mountPath: /mnt/ssd
+      volumes:
+        - name: local-ssd
+          persistentVolumeClaim:
+            claimName: nvme-pvc

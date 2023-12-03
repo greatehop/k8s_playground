@@ -1,0 +1,11 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nvme-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  storageClassName: nvme-storage
+  resources:
+    requests:
+      storage: 1Gi  # it's not actual size, it uses whole disk size

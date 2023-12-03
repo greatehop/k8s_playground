@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nvme-pv
+spec:
+  capacity:
+    storage: 1Gi  # it's not actual size, it uses whole disk size
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: nvme-storage
+  local:
+    path: /mnt/nvme1/
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: karpenter.sh
+          operator: In
+          values:
+          - provisioner-nvme
+
