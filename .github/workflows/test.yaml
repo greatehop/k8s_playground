@@ -1,0 +1,24 @@
+name: test1
+
+on: workflow_dispatch
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Commit new helm chart version
+        run: |
+          git config user.name greatehop
+          git config user.email greatehop@gmail.com
+          git checkout -b test1
+          date > cur_date.txt
+          git add cur_date.txt
+          git commit -m "test1"
+          git push
