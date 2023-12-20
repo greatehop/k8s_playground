@@ -21,4 +21,4 @@ jobs:
           date > cur_date.txt
           git add cur_date.txt
           git commit -m "test1"
-          git push
+          git push origin test1
