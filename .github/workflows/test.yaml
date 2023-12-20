@@ -22,7 +22,7 @@ jobs:
         run: |
           git config user.name greatehop
           git config user.email greatehop@gmail.com
-          git config --global credential.helper cache
+          #git config --global credential.helper cache
           git checkout -b test1
           date > cur_date.txt
           git add cur_date.txt
