@@ -6,6 +6,10 @@ permissions:
   id-token: write
   contents: read
 
+env:
+  HELM_REPOSITORY: greatehop/k8s_playground/
+  HELM_REPOSITORY_BRANCH: main
+  
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
@@ -13,9 +17,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Checkout helm repo
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ env.HELM_REPOSITORY }}
+          token: ${{ secrets.test1_secret }}
+          ref: ${{ env.HELM_REPOSITORY_BRANCH }}
+
       - name: Commit new helm chart version
-        env:
-          ACCESS_TOKEN: '${{ secrets.test1_secret }}'
         run: |
           git config user.name greatehop
           git config user.email greatehop@gmail.com
